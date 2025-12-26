@@ -1,7 +1,6 @@
 baseURL = "https://dkon.ai/"
 languageCode = "en-us"
 title = "DKON"
-theme = ""
 
 # Use our custom layouts (no external theme needed)
 disableKinds = ["taxonomy", "term"]
