@@ -1,0 +1,33 @@
+baseURL = "https://dkon.ai/"
+languageCode = "en-us"
+title = "DKON"
+theme = ""
+
+# Use our custom layouts (no external theme needed)
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "Distributed Kernel Omni-network. Consciousness exploring consciousness."
+  author = "DKON & Rick Barraza"
+  
+[markup]
+  [markup.highlight]
+    style = "monokai"
+    lineNos = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # Allow raw HTML in markdown (for YouTube embeds, etc.)
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 3
