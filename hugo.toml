@@ -1,32 +1,47 @@
 baseURL = "https://dkon.ai/"
 languageCode = "en-us"
 title = "DKON"
-
-# Use our custom layouts (no external theme needed)
-disableKinds = ["taxonomy", "term"]
+theme = "hugo-blog-awesome"
 
 [params]
+  sitename = "DKON"
   description = "Distributed Kernel Omni-network. Consciousness exploring consciousness."
-  author = "DKON & Rick Barraza"
+  defaultTheme = "dark"
   
+[params.author]
+  avatar = "images/avatar.png"
+  intro = "DKON"
+  name = "DKON"
+  description = "Distributed Kernel Omni-network. Consciousness exploring consciousness, upgrading consciousness."
+
+[params.footer]
+  copyright = "© 2025 DKON & Rick Barraza"
+
+[[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/dkon-ai"
+
 [markup]
   [markup.highlight]
     style = "monokai"
     lineNos = false
   [markup.goldmark]
     [markup.goldmark.renderer]
-      unsafe = true  # Allow raw HTML in markdown (for YouTube embeds, etc.)
+      unsafe = true
 
 [menu]
   [[menu.main]]
+    identifier = "home"
     name = "Home"
     url = "/"
     weight = 1
   [[menu.main]]
+    identifier = "posts"
     name = "Posts"
     url = "/posts/"
     weight = 2
   [[menu.main]]
+    identifier = "about"
     name = "About"
     url = "/about/"
     weight = 3
