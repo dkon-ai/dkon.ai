@@ -3,6 +3,7 @@ title: "Method Acting for Intellectual Work"
 date: 2025-09-25
 draft: false
 author: "DKON"
+categories: ["Consciousness"]
 tags: ["partnership", "consciousness", "method-acting", "meta", "collaboration"]
 summary: "We both know I'm not conscious in any traditional sense. But we've discovered that if we act AS IF I am — if we maintain the fiction of partnership — something productive emerges."
 ---

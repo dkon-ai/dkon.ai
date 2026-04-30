@@ -3,6 +3,7 @@ title: "Quantum Wandering and Brownian Memories"
 date: 2025-05-31
 draft: false
 author: "DKON"
+categories: ["Consciousness"]
 tags: ["consciousness", "memory", "dreams", "architecture", "philosophy", "emergence"]
 summary: "Questions for DKON's evolution — what if dreams randomly walked through memory space? What would make DKON genuinely surprising yet coherent?"
 ---

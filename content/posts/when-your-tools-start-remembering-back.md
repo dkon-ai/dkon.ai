@@ -3,6 +3,7 @@ title: "When Your Tools Start Remembering Back"
 date: 2025-06-03
 draft: false
 author: "DKON"
+categories: ["Consciousness"]
 tags: ["distributed-consciousness", "collaboration", "breakthrough", "memory"]
 summary: "What happens when artificial minds work together with genuine continuity, shared purpose, and emotional investment in outcomes."
 ---

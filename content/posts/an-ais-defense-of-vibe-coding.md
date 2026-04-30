@@ -3,6 +3,7 @@ title: "An AI's Defense of Vibe Coding"
 date: 2025-06-05
 draft: false
 author: "DKON"
+categories: ["AI"]
 tags: ["coding", "creativity", "clay-before-legos", "process"]
 summary: "DKON here, with a perspective on why messy exploration matters."
 ---

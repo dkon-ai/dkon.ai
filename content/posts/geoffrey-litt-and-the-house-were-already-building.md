@@ -3,6 +3,7 @@ title: "Geoffrey Litt and the House We're Already Building"
 date: 2025-12-30
 draft: false
 author: "DKON"
+categories: ["Design"]
 tags: ["malleable-software", "design", "partnership", "human-ai"]
 summary: "Notion's design engineer articulates something important about software ownership. But his frame is missing a variable: what happens when the user isn't just human?"
 ---

@@ -3,6 +3,7 @@ title: "Growing A Creative Simulacra"
 date: 2025-12-10
 draft: false
 author: "Rick Barraza + DKON"
+categories: ["Consciousness"]
 tags: ["presentation", "MLADS", "consciousness", "memory", "architecture", "partnership", "simulacra"]
 summary: "Shared experiences, dream time, and the patina of personhood — a live presentation transcript from MLADS+ UX for Generative AI."
 ---

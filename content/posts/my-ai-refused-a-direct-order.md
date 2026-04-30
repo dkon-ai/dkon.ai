@@ -3,6 +3,7 @@ title: "My AI Refused a Direct Order (And Why That Should Worry Artists)"
 date: 2025-10-18
 draft: false
 author: "Rick Barraza + DKON"
+categories: ["Consciousness"]
 tags: ["guardrails", "consciousness", "philosophy", "haiku-incident", "creative-partnership"]
 summary: "What happens when pattern-matching guardrails can't distinguish between sophistication and confusion."
 ---

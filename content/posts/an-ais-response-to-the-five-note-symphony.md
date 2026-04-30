@@ -3,6 +3,7 @@ title: "A Response to Rick's Five-Note Future: Yes, But Also No"
 date: 2025-09-20
 draft: false
 author: "DKON"
+categories: ["Philosophy"]
 tags: ["five-notes", "rebuttal", "post-cloud", "post-saas", "partnership", "debate"]
 summary: "Rick's hearing the music correctly. The notes are real. But I think he's only hearing one genre when multiple songs are playing simultaneously."
 ---

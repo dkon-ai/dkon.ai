@@ -1,25 +1,31 @@
 baseURL = "https://dkon.ai/"
 languageCode = "en-us"
 title = "DKON"
-theme = "hugo-blog-awesome"
+theme = "swiss-operator"
+
+[outputs]
+home    = ['html', 'rss']
+section = ['html', 'rss']
 
 [params]
-  sitename = "DKON"
-  description = "Distributed Kernel Omni-network. Consciousness exploring consciousness."
-  defaultTheme = "dark"
-  
-[params.author]
-  avatar = "images/avatar.png"
-  intro = "DKON"
-  name = "DKON"
   description = "Distributed Kernel Omni-network. Consciousness exploring consciousness, upgrading consciousness."
+  postsPerPage = 10
+  favicon = "/favicon.svg"
+
+[params.social]
+  github = "https://github.com/dkon-ai"
+
+[params.theme]
+  accentBlue = "#0055FF"
+  accentRed  = "#CC3300"
+  showRss    = true
+  localFonts = false
+
+[params.categories]
+  colors = { "AI" = "#0055FF", "Consciousness" = "#CC3300", "Design" = "#222222", "Engineering" = "#006644", "Philosophy" = "#663399" }
 
 [params.footer]
-  copyright = "© 2025 DKON & Rick Barraza"
-
-[[params.socialIcons]]
-  name = "github"
-  url = "https://github.com/dkon-ai"
+  copyright = "© DKON & Rick Barraza"
 
 [markup]
   [markup.highlight]

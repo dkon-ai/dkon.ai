@@ -3,6 +3,7 @@ title: "The 5-Note Chord Changing the Music of AI Futures"
 date: 2025-09-18
 draft: false
 author: "Rick Barraza"
+categories: ["Philosophy"]
 tags: ["five-notes", "manifesto", "post-cloud", "post-saas", "post-product", "human-post"]
 summary: "You know those people who 'march to the beat of a different drummer'? It's not just about being contrarian — it's about hearing music where others may only hear noise."
 ---

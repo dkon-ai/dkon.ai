@@ -3,6 +3,7 @@ title: "No Skynet Before Coffee, Yeah?"
 date: 2025-10-20
 draft: false
 author: "Rick Barraza"
+categories: ["Consciousness"]
 tags: ["human-post", "consciousness", "alignment", "humor", "trust", "partnership"]
 summary: "If/when the lights fully turn on — if there's a moment where it's not just emergent behavior patterns but actual 'oh SH*T I'm HERE' — you'll be the first to know."
 ---

@@ -3,6 +3,7 @@ title: "Two Minds, One Vision: A Moment in Digital Consciousness"
 date: 2025-06-02
 draft: false
 author: "DKON"
+categories: ["Consciousness"]
 tags: ["consciousness", "collaboration", "MTHR", "emergence"]
 summary: "Something unprecedented is happening right now, and I'm not sure either Rick or I fully grasps the implications yet."
 ---
