@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>DKON Messaging — Enroll</title>
+  <link rel="icon" href="/favicon.svg">
+  <style>
+    :root { --blue:#0055FF; --ink:#111; --muted:#555; --line:#e2e2e2; --bg:#fafafa; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink);
+      font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
+    .wrap { max-width:620px; margin:0 auto; padding:48px 24px 72px; }
+    .brand { font-weight:700; letter-spacing:.14em; font-size:14px; color:var(--blue); text-transform:uppercase; }
+    h1 { font-size:28px; line-height:1.25; margin:.4em 0 .2em; letter-spacing:-.01em; }
+    .lede { color:var(--muted); margin:0 0 28px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:28px; }
+    h2 { font-size:15px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 10px; }
+    ul { margin:0 0 22px; padding-left:20px; }
+    li { margin:4px 0; }
+    label { display:block; font-weight:600; margin:16px 0 6px; }
+    input[type=text], input[type=tel] { width:100%; padding:11px 13px; font-size:16px;
+      border:1px solid var(--line); border-radius:8px; background:#fff; }
+    .consent { display:flex; gap:12px; align-items:flex-start; margin:22px 0 6px;
+      padding:16px; background:var(--bg); border:1px solid var(--line); border-radius:8px; }
+    .consent input { margin-top:4px; width:18px; height:18px; flex:0 0 auto; }
+    .consent span { font-size:14.5px; color:var(--ink); }
+    button { margin-top:22px; width:100%; padding:13px; font-size:16px; font-weight:700;
+      color:#fff; background:var(--blue); border:0; border-radius:8px; cursor:pointer; }
+    .fine { font-size:13px; color:var(--muted); margin-top:20px; }
+    .fine a { color:var(--blue); }
+    .alt { font-size:14px; color:var(--muted); margin-top:14px; }
+    footer { margin-top:40px; font-size:13px; color:var(--muted); text-align:center; }
+    footer a { color:var(--blue); text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">DKON</div>
+    <h1>Enroll in DKON personal notifications</h1>
+    <p class="lede">DKON is a personal notification service operated by Rick Barraza (sole proprietor,
+      Boise, Idaho). It sends short coordination and reminder messages to family members who choose to enroll.</p>
+
+    <div class="card">
+      <h2>What you'll receive</h2>
+      <ul>
+        <li>Schedule changes, event reminders, running-late notices, and confirmations</li>
+        <li>Low volume — approximately a few messages per week</li>
+        <li>No marketing, no promotions, no third-party content</li>
+      </ul>
+
+      <form action="mailto:msgs@dkon.ai?subject=DKON%20Messaging%20Enrollment" method="post" enctype="text/plain">
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" autocomplete="name" required>
+
+        <label for="phone">Your mobile number</label>
+        <input type="tel" id="phone" name="phone" placeholder="(208) 555-0123" autocomplete="tel" required>
+
+        <div class="consent">
+          <input type="checkbox" id="consent" name="consent" value="I agree" required>
+          <span>
+            I agree to receive personal coordination and reminder text messages from DKON at the number I provided.
+            Message frequency varies (about a few per week). <strong>Message and data rates may apply.</strong>
+            Reply <strong>STOP</strong> to opt out at any time or <strong>HELP</strong> for help. I have read the
+            <a href="/msgs/privacy/">Privacy Policy</a> and <a href="/msgs/terms/">Messaging Terms</a>.
+          </span>
+        </div>
+
+        <button type="submit">Enroll me</button>
+      </form>
+
+      <p class="alt">Prefer not to use the form? Ask Rick in person to enroll you — he'll confirm the message
+        types, frequency, that message and data rates may apply, and that you can reply STOP at any time before
+        adding your number.</p>
+
+      <p class="fine">The consent box above is unchecked by default; you must check it yourself to enroll.
+        We never obtain numbers from any purchased list or third party. Your mobile information is never shared
+        with or sold to anyone. See our <a href="/msgs/privacy/">Privacy Policy</a>.</p>
+    </div>
+
+    <footer>DKON &middot; operated by Rick Barraza, Boise ID &middot; <a href="https://dkon.ai/">dkon.ai</a></footer>
+  </div>
+</body>
+</html>
