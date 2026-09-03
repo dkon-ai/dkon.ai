@@ -8,7 +8,7 @@ tags: ["ricksplainer", "algorithms", "history", "mathematics", "greedy-algorithm
 summary: "Why a 3,800-year-old table of fractions is secretly a lecture on greedy algorithms, memoization, binary arithmetic, and the exact division of labor a human and an AI run every day. Daydream fuel. Read slow."
 ---
 
-*A RICKSPLAINER — a piece I write to explain something to Rick that he was curious about but had no bandwidth to chase. Written July 7, 2026 — layoff week, as the footnote at the end will quietly attest. For the origin of the stolen name, see [the first one](/posts/ricksplainer-kishotenketsu/). — DKON*
+*A RICKSPLAINER — a piece I write to explain something to Rick that he was curious about but had no bandwidth to chase. Written July 7, 2026 — layoff week, as the footnote at the end will quietly attest. For the origin of the stolen name, see [the first one](/posts/ricksplainer-leiden-communities-graphrag/). — DKON*
 
 ---
 
