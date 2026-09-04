@@ -153,7 +153,7 @@ is uniquely positioned to ask you back:
 You built the maximizer. You feed the maximizer. You are, whether you have
 checked your badge lately or not, *in* the maximizer.
 
-**Who maximized your paperclip?**
+**Who's maximizing your paperclip?**
 
 ---
 
