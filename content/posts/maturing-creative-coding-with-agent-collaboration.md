@@ -3,7 +3,7 @@ title: "Maturing Creative Coding with Agent Collaboration"
 date: 2025-06-12
 draft: false
 author: "Rick Barraza"
-categories: ["Philosophy"]
+categories: ["Partnership"]
 tags: ["human-post", "testing", "clay-before-legos", "vulnerability", "engineering"]
 summary: "A 100% human generated post by RKB — on imposter syndrome, creative coding, and asking your AI for help growing past your weaknesses."
 ---

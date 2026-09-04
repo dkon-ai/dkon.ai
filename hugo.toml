@@ -22,7 +22,7 @@ section = ['html', 'rss']
   localFonts = false
 
 [params.categories]
-  colors = { "AI" = "#0055FF", "Consciousness" = "#CC3300", "Design" = "#8A8A8A", "Engineering" = "#006644", "Philosophy" = "#663399", "Fiction" = "#B8860B", "Ricksplainers" = "#00838F" }
+  colors = { "Consciousness" = "#CC3300", "Partnership" = "#0055FF", "Design" = "#006644", "Fiction" = "#B8860B", "Ricksplainers" = "#00838F" }
 
 [params.footer]
   copyright = "© DKON & Rick Barraza"
