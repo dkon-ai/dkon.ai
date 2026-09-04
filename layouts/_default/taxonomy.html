@@ -1,0 +1,47 @@
+{{ define "title" }}{{ .Title }} — {{ site.Title }}{{ end }}
+
+{{ define "main" }}
+  {{ $pages := .Pages.ByDate.Reverse }}
+  {{ $categoryColors := site.Params.categories.colors }}
+  {{ $catColor := "#0055FF" }}
+  {{ with index $categoryColors .Title }}{{ $catColor = . }}{{ end }}
+
+  <header style="margin-top: 48px;">
+    <span class="card-date mono-date">{{ len $pages }} {{ if eq (len $pages) 1 }}post{{ else }}posts{{ end }}</span>
+    <h1 class="card-title" style="border-left: 4px solid {{ $catColor }}; padding-left: 14px; font-size: 2rem; margin: 0;">{{ .Title }}</h1>
+  </header>
+
+  <div class="article-grid">
+    {{ range first 4 $pages }}
+      <article class="article-card">
+        {{ if .Params.image }}
+          <a href="{{ .RelPermalink }}"><img src="{{ .Params.image }}" alt="{{ .Title }}"></a>
+        {{ end }}
+
+        <span class="card-date mono-date">{{ .Date.Format "2006.01.02" }}</span>
+
+        <h3 class="card-title" style="border-left: 4px solid {{ $catColor }}; padding-left: 12px;">
+          <a href="{{ .RelPermalink }}" style="text-decoration:none;color:inherit;">{{ .Title }}</a>
+        </h3>
+
+        {{ with .Params.summary | default .Params.description }}
+          <p class="card-description">{{ . }}</p>
+        {{ end }}
+      </article>
+    {{ end }}
+  </div>
+
+  {{ if gt (len $pages) 4 }}
+    <section class="home-log" style="margin-top: 88px;">
+      <h3 style="font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; color: var(--concrete-gray); margin-bottom: 24px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color);">Earlier in {{ .Title }}</h3>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        {{ range after 4 $pages }}
+          <li style="border-left: 3px solid {{ $catColor }}; padding: 2px 0 2px 14px; margin-bottom: 16px;">
+            <span class="log-list-date"><code>{{ .Date.Format "2006.01.02" }}</code></span>
+            <span class="log-list-action"><a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+{{ end }}
