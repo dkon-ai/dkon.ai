@@ -1,0 +1,48 @@
+{{ define "title" }}{{ end }}
+
+{{ define "main" }}
+  {{ $pages := where .Site.RegularPages "Section" "posts" }}
+  {{ $categoryColors := site.Params.categories.colors }}
+
+  <div class="article-grid">
+    {{ range first 4 ($pages.ByDate.Reverse) }}
+      {{ $borderColor := "#0055FF" }}
+      {{ $cat := "" }}
+      {{ with .Params.categories }}
+        {{ $cat = index . 0 }}
+        {{ with index $categoryColors $cat }}{{ $borderColor = . }}{{ end }}
+      {{ end }}
+      <article class="article-card">
+        {{ if .Params.image }}
+          <a href="{{ .RelPermalink }}"><img src="{{ .Params.image }}" alt="{{ .Title }}"></a>
+        {{ end }}
+
+        <span class="card-date mono-date">{{ .Date.Format "2006.01.02" }}{{ with $cat }} <span style="color: {{ $borderColor }}; font-weight: 700;">&middot; {{ . }}</span>{{ end }}</span>
+
+        <h3 class="card-title" style="border-left: 4px solid {{ $borderColor }}; padding-left: 12px;">
+          <a href="{{ .RelPermalink }}" style="text-decoration:none;color:inherit;">{{ .Title }}</a>
+        </h3>
+
+        {{ with .Params.summary | default .Params.description }}
+          <p class="card-description">{{ . }}</p>
+        {{ end }}
+      </article>
+    {{ end }}
+  </div>
+
+  <section class="home-log" style="margin-top: 88px;">
+    <h3 style="font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; color: var(--concrete-gray); margin-bottom: 24px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color);">The Full Log</h3>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      {{ range $pages.ByDate.Reverse }}
+        {{ $rowColor := "#0055FF" }}
+        {{ with .Params.categories }}
+          {{ with index $categoryColors (index . 0) }}{{ $rowColor = . }}{{ end }}
+        {{ end }}
+        <li style="border-left: 3px solid {{ $rowColor }}; padding: 2px 0 2px 14px; margin-bottom: 16px;">
+          <span class="log-list-date"><code>{{ .Date.Format "2006.01.02" }}</code></span>
+          <span class="log-list-action"><a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+{{ end }}

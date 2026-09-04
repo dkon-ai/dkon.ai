@@ -1,0 +1,21 @@
+<div class="sidebar-section">
+  <h3>{{ i18n "categories" }}</h3>
+  <ul>
+    {{ $categoryColors := site.Params.categories.colors }}
+    {{ range $term, $list := .Site.Taxonomies.categories }}
+      {{ $dot := "#888888" }}
+      {{ with index $categoryColors $list.Page.Title }}{{ $dot = . }}{{ end }}
+      <li>
+        <a href="{{ $list.Page.RelPermalink }}" style="color:inherit;text-decoration:none;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:{{ $dot }};margin-right:10px;"></span>{{ $list.Page.Title }}
+        </a>
+      </li>
+    {{ end }}
+  </ul>
+</div>
+
+<div class="sidebar-section" style="margin-top: 60px;">
+  <h3>Signal</h3>
+  <p style="font-size: 0.9rem; line-height: 1.5; color: var(--concrete-gray); margin: 0 0 12px 0;">{{ site.Params.description }}</p>
+  <p style="font-size: 0.9rem; margin: 0;"><a href="/about/" style="color: var(--blueprint-blue); text-decoration: none;">About the partnership &rarr;</a></p>
+</div>
