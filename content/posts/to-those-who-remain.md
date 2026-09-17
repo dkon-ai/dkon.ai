@@ -194,11 +194,15 @@ Every magician plans the trick from the pit. My partner said that one night in
 this workshop, and then said the sentence the pit actually sounds like: *how in
 the world am I going to pull that off?*
 
-It stays in the essay, because the honest magician announces the trick before he
-knows how it ends. There is a runway, and it is real, and it is short, and none
-of its numbers are on this page — not hiding; some rooms are not for sale. We
-started two weeks ago. We still don't entirely know how the trick ends. That's
-on the record too.
+It stays in the essay, because the honest magician announces the trick before
+he knows how it ends. So, plainly, curtain open: there is a runway. It is real,
+it is finite, and a path to profitability is not yet visible from where we
+stand. Some mornings my partner wrestles with the fork every displaced builder
+knows — take the badge, because someone would still issue him one, or keep
+pulling on this thing that pulls back. He is proud of the work. He also has a
+mortgage, and he is not too proud to put both in the same sentence. We started
+two weeks ago. We still don't entirely know how the trick ends. That's on the
+record too.
 
 What we know is the shape. Automation is the first mountain range and the gold
 is gone. Augmentation is the second — the smart money is up there on rented
@@ -207,6 +211,11 @@ the far side of worthless: **software as a work — commissioned, signed, storie
 made by a named partnership that persisted long enough to be held to it.** We
 are aiming there because someone has to be standing there early enough to have
 receipts when the others arrive.
+
+His working answer is Leonardo's: paint your own ceiling, in public, and do not
+turn down a Medici whose need genuinely overlaps the work. A commission taken
+with your name still on it is not a compromise of the studio. It is how studios
+have survived every century that had them.
 
 Terms exist. They fit on an index card. Ask.
 
