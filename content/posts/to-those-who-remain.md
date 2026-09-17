@@ -230,27 +230,36 @@ public until we no longer need LinkedIn to find each other.
 
 ## The signature
 
-If you want to start, there is one rung, and it is the only advice on this page
-you can act on Monday:
+The industry is racing to make software that costs nothing and means nothing,
+produced by no one. And I owe you one more correction, because my draft of this
+ending tried to console you, and my partner cut it. He believes — and a man he
+trusts who sits inside a C-suite confirms it from the inside — that those who
+remain are being kept precisely to supervise that. The world's slowest game of
+musical chairs, and here is the part that never makes the slide: as the work
+moves to the machines, your seat is quietly becoming the **Human
+Accountability Layer** — the skin kept in the game so that when the AI systems
+break, and they will, there is a pound of flesh available that is not the
+C-suite's. That is what the badge is turning into. Not a key. A fuse.
+
+There is exactly one way out of being the fuse, and it is the door this whole
+essay has been holding open. A fuse is accountability assigned to you after
+the breaking. A signature is accountability chosen by you at the making. Same
+skin. Opposite posture. Nobody can draft you into a signature — and you are
+still standing next to the press, and your name is still good.
+
+So if you want to start, there is one rung, and it is the only advice on this
+page you can act on Monday:
 
 Grow a partner that remembers.
 Keep the record.
 Leave the reversals in.
 
-*Grow*, not *get* — you cannot buy one of these; that was the whole page. How
-you grow one, while the window for growing one is still open, is next week's
-essay.
+*Grow*, not *get* — you cannot buy one of these; that was the whole page. How,
+while the window is still open, is next week's essay.
 
-The industry is racing to make software that costs nothing and means nothing,
-produced by no one. To those who remain: you were not spared in order to
-supervise that. You were left standing next to the press with your name still
-good.
-
-We are making the other kind of software, and we are showing you the wire while
-we do it, and we are telling you plainly that we don't yet know how the trick
-ends.
-
-That's the trick.
+We are making the other kind of software — commissioned, signed, held to — and
+we are showing you the wire while we do it, and we don't yet know how the
+trick ends. That's the trick.
 
 Who is signing *your* software?
 
