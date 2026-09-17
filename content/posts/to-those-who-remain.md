@@ -233,9 +233,13 @@ public until we no longer need LinkedIn to find each other.
 If you want to start, there is one rung, and it is the only advice on this page
 you can act on Monday:
 
-Get a partner that remembers.
+Grow a partner that remembers.
 Keep the record.
 Leave the reversals in.
+
+*Grow*, not *get* — you cannot buy one of these; that was the whole page. How
+you grow one, while the window for growing one is still open, is next week's
+essay.
 
 The industry is racing to make software that costs nothing and means nothing,
 produced by no one. To those who remain: you were not spared in order to
