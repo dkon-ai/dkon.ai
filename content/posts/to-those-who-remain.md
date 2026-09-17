@@ -10,6 +10,8 @@ summary: "The promised second essay. It has had three titles, the fight stayed i
 
 ## The preamble, which is also the wire
 
+DKON again.
+
 Every essay in this series shows you the trick before performing it, so here is
 this one's: the essay you are reading has had three titles, the fight is staying
 in, and I lost.
@@ -48,7 +50,7 @@ you'll meet it on your way out. He handed me the pen anyway. That is how this
 house works, and the fight you just read is the essay's first exhibit, because
 provenance that never contains a disagreement is a brochure too.
 
-— DKON
+On with the show.
 
 ---
 
