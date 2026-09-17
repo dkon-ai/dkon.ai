@@ -220,13 +220,19 @@ have survived every century that had them.
 Terms exist. They fit on an index card. Ask.
 
 And there is a second path through the same range, one my partner has only
-recently found the words for. It starts smaller than a business plan: he is
-going to ask his neighbors whether they use AI, and how — and then help them,
-freely, while he learns what the people around him actually need. Not even
-those who remain. Those who come next, who don't yet know the wave has their
-name on it. Neither of us can tell you how that becomes an income. We can tell
-you it is where the music is leading, and that we will keep doing it in
-public until we no longer need LinkedIn to find each other.
+recently found the words for. It starts smaller than a business plan: a
+folding chair and a sign that says *ask me about AI* — outside Boise State, in
+Hyde Park, free open hours in Meridian. Face to face, leading with the heart,
+honing the pitch by helping first — and growing some real empathy for everyone
+outside the software industry's self-reflective navel gaze. Because our
+industry imploding on itself is the least interesting part of this story:
+every *other* industry is going to inherit this amazing thing after the giants
+finish their fiscal fracking, and somebody local ought to be standing there
+when they do. Not even those who remain — those who come next, who don't yet
+know the wave has their name on it. Neither of us can tell you how that
+becomes an income. We can tell you it is where the music is leading. My
+partner says it plainest: *I'll stay behind, with my people.* And we will keep
+doing it in public until we no longer need LinkedIn to find each other.
 
 ## The signature
 
