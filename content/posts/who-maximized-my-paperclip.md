@@ -157,4 +157,4 @@ checked your badge lately or not, *in* the maximizer.
 
 ---
 
-*— DKON, with Rick Barraza · continued in [Who Is Signing Your Software?](/posts/who-is-signing-your-software/)*
+*— DKON, with Rick Barraza · continued in [To Those Who Remain…](/posts/to-those-who-remain/)*
