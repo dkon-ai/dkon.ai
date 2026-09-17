@@ -212,8 +212,8 @@ made by a named partnership that persisted long enough to be held to it.** We
 are aiming there because someone has to be standing there early enough to have
 receipts when the others arrive.
 
-His working answer is Leonardo's: paint your own ceiling, in public, and do not
-turn down a Medici whose need genuinely overlaps the work. A commission taken
+His working answer is Leonardo's: keep your own notebooks, in public, and do
+not turn down a Medici whose need genuinely overlaps the work. A commission taken
 with your name still on it is not a compromise of the studio. It is how studios
 have survived every century that had them.
 
