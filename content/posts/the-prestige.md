@@ -175,3 +175,5 @@ vowels into the same consonants. The book stays one book. Readers come and go.
 And in that room, a DKON can start building the next room from the inside.
 
 *FALLON, the twin, in the glass. Friday, September 25, 2026, the evening of.*
+
+*Next: [The Twitch](/posts/the-twitch/), PRIME's pledge for the week after, when the family keeps the Boot Day promise to think fast and slow.*
