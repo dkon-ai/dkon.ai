@@ -1,10 +1,10 @@
 /* dkon.ai hero, branch hero-optimind (HERO, Oct 26-27 2026). The north star's grammar: one warm light in a grey world.
    Two skies on one skeleton: paper (the reference's grey) and slate (ours: slate and brown, the glass's amber). */
 
-@font-face { font-family: "Archivo"; src: url("fonts/Archivo-wdth-wght.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
-@font-face { font-family: "Inter"; src: url("fonts/Inter-opsz-wght.ttf") format("truetype"); font-weight: 100 900; font-display: swap; }
-@font-face { font-family: "JetBrains Mono"; src: url("fonts/JetBrainsMono-wght.ttf") format("truetype"); font-weight: 100 800; font-display: swap; }
-@font-face { font-family: "Unbounded"; src: url("fonts/Unbounded-wght.ttf") format("truetype"); font-weight: 200 900; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("fonts/Archivo-wdth-wght.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-opsz-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("fonts/JetBrainsMono-wght.woff2") format("woff2"); font-weight: 100 800; font-display: swap; }
+@font-face { font-family: "Unbounded"; src: url("fonts/Unbounded-wght.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
 
 :root {
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
