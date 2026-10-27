@@ -85,7 +85,7 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(lumpy(position), 1.0);
   float r = length(position) / ${R.toFixed(1)};
   float dt = uTime - aIgnite;
-  float heat = dt >= 0.0 ? aStrength * (0.9 * exp(-dt / 1.3) + 0.38 * exp(-dt / 15.0)) : 0.0;
+  float heat = dt >= 0.0 ? aStrength * (0.9 * exp(-dt / 1.3) + 0.38 * exp(-dt / 15.0)) + step(1.01, aStrength) * 0.55 * exp(-dt / 150.0) : 0.0;
   float w = clamp(aWeight / 14.0, 0.0, 1.0);
   float size = mix(0.85, 2.5, sqrt(w)) * (aCharge > 2.5 ? 1.3 : 1.0) * (1.0 + 3.0 * heat);
   float depth = clamp((mv.z - uCamZ) / ${R.toFixed(1)}, -1.0, 1.0);
@@ -130,11 +130,11 @@ void main() {
   vec3 col = vKind < 0.5 ? uLine : uReach;
   col = mix(col, uGlow, vInner * 0.55);
   float a = base * mix(0.2, 1.0, vDepth) * (1.0 + 0.6 * vInner * uBreath);
-  if (vDt >= 0.0 && vDt < 40.0) {
+  if (vDt >= 0.0 && vDt < 900.0) {
     float head = vDt / 1.7;                                   // the pulse runs the thread in 1.7 s
     float x = (vU - head) * 9.0;
     float pulse = exp(-x * x) * (head < 1.25 ? 1.0 : 0.0);
-    float lit = vU < head ? 0.55 * exp(-vDt / 11.0) : 0.0;     // the thread stays warm behind it, cooling
+    float lit = vU < head ? 0.55 * exp(-vDt / (vStrength > 1.01 ? 120.0 : 11.0)) : 0.0;     // the thread stays warm behind it, cooling (minutes for a live write)
     float glow = (pulse + lit) * vStrength;
     col = mix(col, vec3(1.0, 0.80, 0.50), clamp(glow * 1.4, 0.0, 1.0));
     a += glow * 0.85;
@@ -508,7 +508,7 @@ export function createOrb(canvas, graph, opts = {}) {
     }
   }
   /** A live leaf from /events: write it into the spare capacity (its index comes from the server), its threads too, then light it. */
-  function addLeaf(e) {
+  function addLeaf(e, strength = 1.6) {
     if (e.i >= cap.nodes) return false;
     nPos[e.i * 3] = e.pos[0]; nPos[e.i * 3 + 1] = e.pos[1]; nPos[e.i * 3 + 2] = e.pos[2];
     nCharge[e.i] = e.charge; nWeight[e.i] = e.w;
@@ -522,7 +522,7 @@ export function createOrb(canvas, graph, opts = {}) {
       aLPos.addUpdateRange(k * 6, 6); aLKind.addUpdateRange(k * 2, 2); aLPos.needsUpdate = aLKind.needsUpdate = true;
     }
     lineGeo.setDrawRange(0, m * 2);
-    ignite(e.i, { strength: 1, lineBase: base, lineCount: count });
+    ignite(e.i, { strength, lineBase: base, lineCount: count });
     return true;
   }
   function breathe() { breathAt = now; }
@@ -557,5 +557,5 @@ export function createOrb(canvas, graph, opts = {}) {
   }
 
   resize(opts.width ?? canvas.clientWidth ?? 1, opts.height ?? canvas.clientHeight ?? 1);
-  return { frame, ignite, addLeaf, breathe, resize, stats, dispose, get count() { return n; }, renderer };
+  return { frame, ignite, addLeaf, breathe, pulse: (i, s = 1) => { if (i >= 0 && i < n) ring(i, s); }, resize, stats, dispose, get count() { return n; }, renderer };
 }

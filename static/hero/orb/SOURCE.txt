@@ -1,3 +1,3 @@
-orb.js and vendor/ copied from dkonstudios branch orb @ 315978d0 (dev/orb), by HERO, 2026-10-26T23:03:25-06:00.
-graph.json is ORB's GET /graph, sanitized for a public page: no authors (who zeroed, whoList dropped), births floored to the day.
-three.js is MIT (c) 2010-2025 three.js authors.
+orb.js and vendor/ copied from dkonstudios branch orb @ 1150cfa7 (dev/orb; ORB logged DONE orb-module), by HERO, 2026-10-26T23:06:26-06:00.
+graph.json is ORB's public export (tools/export-graph.mjs): shape only, no authors, no times, positions to 0.1.
+three.js is MIT, (c) 2010-2026 three.js authors.
