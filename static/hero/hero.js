@@ -123,7 +123,9 @@ const tl = gsap.timeline({
     trigger: '.stage', start: 'top top', end: () => `+=${Math.round(vh() * (growing ? 6.2 : 4.4))}`, pin: true, scrub: 1.6, anticipatePin: 1,
     invalidateOnRefresh: true,
     onUpdate: (st) => { const t = st.progress * tl.duration(); setSection(t < tl.labels.tree ? 1 : t < tl.labels.studio ? 2 : 3); },
-    onLeave: () => orb?.stop?.(), onEnterBack: () => orb?.start?.(),
+    // when the stage unpins, the orb rests and the chrome turns solid, before the cards can scroll up under a bare nav
+    onLeave: () => { orb?.stop?.(); root.classList.add('chrome-solid'); },
+    onEnterBack: () => { orb?.start?.(); root.classList.remove('chrome-solid'); },
   },
 });
 tl.addLabel('split', 0)
@@ -168,8 +170,6 @@ document.querySelectorAll('.card').forEach((card, i) => {
 });
 
 // ---- 004 and 005 ----
-// past the stage, the chrome turns solid so the long sections don't slide under a bare nav
-ScrollTrigger.create({ trigger: '#story', start: 'top 72px', onEnter: () => root.classList.add('chrome-solid'), onLeaveBack: () => root.classList.remove('chrome-solid') });
 ScrollTrigger.create({ trigger: '#story', start: 'top 55%', end: 'bottom 55%', onEnter: () => setSection(4), onEnterBack: () => setSection(4) });
 ScrollTrigger.create({ trigger: '#letters', start: 'top 55%', onEnter: () => setSection(5), onLeaveBack: () => setSection(4) });
 gsap.utils.toArray('.reveal').forEach((el) => {
