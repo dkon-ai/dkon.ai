@@ -79,6 +79,18 @@ function setGrowth(p) {
 }
 const orbReady = startOrb().catch((e) => console.warn('orb failed', e));
 
+// ---- the plates: EMBOSS's renders for this sky (unless ?icons=svg)
+function setPlates() {
+  if (!root.classList.contains('icons-plates')) return;
+  const s = sky();
+  document.querySelectorAll('.plate-stack').forEach((st) => {
+    const m = st.dataset.plate;
+    st.querySelector('.plate-base').src = `/hero/plates/${m}-${s}-base.webp`;
+    st.querySelector('.plate-gold').src = `/hero/plates/${m}-${s}-gold.webp`;
+  });
+}
+setPlates();
+
 // ---- the counter and the nav glow ----
 const counter = document.querySelector('.c-now');
 const glow = document.querySelector('.nav-glow');
@@ -133,6 +145,8 @@ tl.addLabel('split', 0)
   .addLabel('gold', '>-0.1')
   .fromTo('.card .emb', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.7, stagger: 0.22, ease: 'power1.inOut' }, 'gold')
   .fromTo(cardLamps, { attr: { x: -110, y: 10, z: 46 } }, { attr: { x: 300, y: 190, z: 64 }, duration: 1.6, stagger: 0.22, ease: 'power1.inOut' }, 'gold')
+  .fromTo('.card .plate-base', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.7, stagger: 0.22, ease: 'power1.inOut' }, 'gold')
+  .fromTo('.card .plate-gold', { '--sweep': 0 }, { '--sweep': 1, duration: 1.7, stagger: 0.22, ease: 'power1.inOut' }, 'gold+=0.25')
   .fromTo('.card h3, .card p', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.05, ease: 'power2.out' }, 'gold+=0.9')
   .fromTo('.consult', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 }, '>-0.2')
   .to({}, { duration: 0.5 });
@@ -161,6 +175,7 @@ gsap.utils.toArray('.reveal').forEach((el) => {
 });
 // the story's tree takes its own slow light when it arrives
 const treeLamp = document.querySelector('#emb-3 .lamp');
+gsap.fromTo('.story-tree .plate-gold', { '--sweep': 0 }, { '--sweep': 1, duration: 3.2, ease: 'power1.inOut', scrollTrigger: { trigger: '.story-tree', start: 'top 80%' } });
 if (treeLamp) gsap.fromTo(treeLamp, { attr: { x: -80, y: -20, z: 50 } }, { attr: { x: 280, y: 220, z: 70 }, duration: 3.2, ease: 'power1.inOut', scrollTrigger: { trigger: '.story-tree', start: 'top 80%' } });
 
 // ---- nav: jump to a beat, even inside the pin ----
@@ -180,6 +195,7 @@ document.querySelector('.sky-toggle').addEventListener('click', () => {
   const next = sky() === 'paper' ? 'slate' : 'paper';
   root.setAttribute('data-sky', next);
   localStorage.setItem('dkon-sky', next);
+  setPlates();
   orb?.setSky?.(next);
   const u = new URL(location.href); u.searchParams.set('sky', next); history.replaceState(null, '', u);
 });

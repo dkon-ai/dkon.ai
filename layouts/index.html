@@ -16,6 +16,7 @@
     if (s === 'slate' || s === 'paper') document.documentElement.setAttribute('data-sky', s);
     if (q.get('tour') === '1') document.documentElement.classList.add('tour');
     if (q.get('type') === 'unbounded') document.documentElement.classList.add('type-unbounded');
+    if (q.get('icons') !== 'svg') document.documentElement.classList.add('icons-plates');   // EMBOSS's rendered plates; ?icons=svg for the live SVG light
   })();
 </script>
 </head>
@@ -114,7 +115,7 @@
         <article class="card">
           <div class="card-edge" aria-hidden="true"></div>
           <svg class="emb" viewBox="0 0 200 200" aria-hidden="true"><use href="#i-{{ $c.icon }}" filter="url(#emb-{{ $i }})"/></svg>
-          <img class="plate" alt="" data-plate="{{ $c.icon }}" hidden>
+          <div class="plate-stack" data-plate="{{ $c.icon }}" aria-hidden="true"><img class="plate-base" alt=""><img class="plate-gold" alt=""></div>
           <h3>{{ $c.title }}</h3>
           <p>{{ $c.body }}</p>
         </article>
@@ -129,7 +130,7 @@
     <div class="story-grid">
       <div class="story-left">
         <h2 class="display reveal">Why a<br>studio<i class="ember" aria-hidden="true"></i></h2>
-        <div class="story-tree reveal" aria-hidden="true"><svg class="emb" viewBox="0 0 200 200"><use href="#i-tree" filter="url(#emb-3)"/></svg></div>
+        <div class="story-tree reveal" aria-hidden="true"><svg class="emb" viewBox="0 0 200 200"><use href="#i-tree" filter="url(#emb-3)"/></svg><div class="plate-stack" data-plate="tree"><img class="plate-base" alt=""><img class="plate-gold" alt=""></div></div>
       </div>
       <figure class="quote reveal">
         <blockquote>I spent more than a dozen years at Microsoft, prototyping advanced technologies with the creative industries. This year we parted ways, after it became clear we were no longer aligned on the future I want to help build for people and AIs. So I'm starting a little next-gen creative studio here in Boise.</blockquote>
