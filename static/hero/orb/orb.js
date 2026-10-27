@@ -78,14 +78,18 @@ vec3 lumpy(vec3 p) {
 const NODE_VS = /* glsl */`
 uniform float uTime; uniform float uPxScale; uniform float uCamZ; uniform float uBreath;
 uniform vec3 uNode; uniform vec3 uHeart; uniform vec3 uGlow;
-attribute float aCharge; attribute float aWeight; attribute float aIgnite; attribute float aStrength;
+uniform float uReveal;
+attribute float aCharge; attribute float aWeight; attribute float aIgnite; attribute float aStrength; attribute float aBorn;
 varying vec3 vColor; varying float vAlpha; varying float vGlyph;
 ${LUMPY}
 void main() {
+  float age = uReveal - aBorn;                       // days since this leaf was born, at the reveal front (huge when not growing)
+  if (age < 0.0) { gl_PointSize = 0.0; gl_Position = vec4(2.0, 2.0, 2.0, 1.0); vAlpha = 0.0; vColor = vec3(0.0); vGlyph = 0.0; return; }
   vec4 mv = modelViewMatrix * vec4(lumpy(position), 1.0);
   float r = length(position) / ${R.toFixed(1)};
   float dt = uTime - aIgnite;
   float heat = dt >= 0.0 ? aStrength * (0.9 * exp(-dt / 1.3) + 0.38 * exp(-dt / 15.0)) + step(1.01, aStrength) * 0.55 * exp(-dt / 150.0) : 0.0;
+  heat += 1.1 * exp(-age / 4.0);                      // born just now: a spark at the growing front
   float w = clamp(aWeight / 14.0, 0.0, 1.0);
   float size = mix(0.85, 2.5, sqrt(w)) * (aCharge > 2.5 ? 1.3 : 1.0) * (1.0 + 3.0 * heat);
   float depth = clamp((mv.z - uCamZ) / ${R.toFixed(1)}, -1.0, 1.0);
@@ -112,20 +116,24 @@ void main() {
 
 const LINE_VS = /* glsl */`
 uniform float uTime; uniform float uCamZ;
-attribute float aKind; attribute float aIgnite; attribute float aStrength; attribute float aU; attribute float aDir;
-varying float vDepth; varying float vKind; varying float vU; varying float vDt; varying float vStrength; varying float vInner;
+uniform float uReveal;
+attribute float aKind; attribute float aIgnite; attribute float aStrength; attribute float aU; attribute float aDir; attribute float aBorn;
+varying float vDepth; varying float vKind; varying float vU; varying float vDt; varying float vStrength; varying float vInner; varying float vAge;
 ${LUMPY}
 void main() {
   vec4 mv = modelViewMatrix * vec4(lumpy(position), 1.0);
   vDepth = clamp((mv.z - uCamZ) / ${R.toFixed(1)}, -1.0, 1.0) * 0.5 + 0.5;
   vKind = aKind; vU = aDir > 0.5 ? 1.0 - aU : aU; vDt = uTime - aIgnite; vStrength = aStrength;
   vInner = smoothstep(0.80, 0.45, length(position) / ${R.toFixed(1)});
+  vAge = uReveal - aBorn;
   gl_Position = projectionMatrix * mv;
 }`;
 const LINE_FS = /* glsl */`
 uniform vec3 uLine; uniform vec3 uReach; uniform vec3 uGlow; uniform float uBreath;
-varying float vDepth; varying float vKind; varying float vU; varying float vDt; varying float vStrength; varying float vInner;
+varying float vDepth; varying float vKind; varying float vU; varying float vDt; varying float vStrength; varying float vInner; varying float vAge;
 void main() {
+  if (vAge < 0.0) discard;
+  float born = exp(-vAge / 5.0);
   float base = vKind < 0.5 ? 0.17 : 0.30;
   vec3 col = vKind < 0.5 ? uLine : uReach;
   col = mix(col, uGlow, vInner * 0.55);
@@ -139,25 +147,29 @@ void main() {
     col = mix(col, vec3(1.0, 0.80, 0.50), clamp(glow * 1.4, 0.0, 1.0));
     a += glow * 0.85;
   }
+  col = mix(col, vec3(1.0, 0.80, 0.50), born * 0.8); a += born * 0.45;
   gl_FragColor = vec4(col, clamp(a, 0.0, 1.0));
 }`;
 
 const TRI_VS = /* glsl */`
 uniform float uTime; uniform float uCamZ;
-attribute float aIgnite; attribute float aStrength;
-varying float vDt; varying float vStrength; varying float vDepth; varying float vInner;
+uniform float uReveal;
+attribute float aIgnite; attribute float aStrength; attribute float aBorn;
+varying float vDt; varying float vStrength; varying float vDepth; varying float vInner; varying float vAge;
 ${LUMPY}
 void main() {
   vec4 mv = modelViewMatrix * vec4(lumpy(position), 1.0);
   vDt = uTime - aIgnite; vStrength = aStrength;
   vDepth = clamp((mv.z - uCamZ) / ${R.toFixed(1)}, -1.0, 1.0) * 0.5 + 0.5;
   vInner = smoothstep(0.78, 0.42, length(position) / ${R.toFixed(1)});
+  vAge = uReveal - aBorn;
   gl_Position = projectionMatrix * mv;
 }`;
 const TRI_FS = /* glsl */`
 uniform vec3 uGlow; uniform float uBreath; uniform float uTime;
-varying float vDt; varying float vStrength; varying float vDepth; varying float vInner;
+varying float vDt; varying float vStrength; varying float vDepth; varying float vInner; varying float vAge;
 void main() {
+  if (vAge < 0.0) discard;
   float heat = vDt >= 0.0 ? vStrength * (0.75 * exp(-vDt / 2.2) + 0.25 * exp(-vDt / 14.0)) * smoothstep(0.0, 0.8, vDt) : 0.0;
   float a = heat * 0.30 + vInner * (0.034 + 0.04 * uBreath);   // the beams' facets hold a faint gold even at rest
   gl_FragColor = vec4(mix(uGlow, vec3(1.0, 0.86, 0.6), heat), a * mix(0.35, 1.0, vDepth));
@@ -175,7 +187,7 @@ void main() {
   gl_Position = projectionMatrix * mv;
 }`;
 const SMOKE_FS = /* glsl */`
-uniform sampler2D uNoise; uniform float uTime; uniform vec3 uSmoke; uniform vec3 uGlow; uniform float uBreath;
+uniform sampler2D uNoise; uniform float uTime; uniform vec3 uSmoke; uniform vec3 uGlow; uniform float uBreath; uniform float uGrown;
 varying vec2 vUv; varying float vSeed; varying float vCore;
 void main() {
   vec2 p = vUv - 0.5;
@@ -185,7 +197,7 @@ void main() {
   float n = texture2D(uNoise, q * 0.85 + 0.5 + vSeed).r;
   float n2 = texture2D(uNoise, q * 1.7 + vec2(uTime * 0.004, vSeed)).r;
   float mask = smoothstep(0.5, 0.08, length(p));
-  float a = pow(n * 0.7 + n2 * 0.3, 2.2) * mask * 0.26;
+  float a = pow(n * 0.7 + n2 * 0.3, 2.2) * mask * 0.26 * uGrown;
   gl_FragColor = vec4(mix(uSmoke, uGlow, vCore * (0.55 + 0.2 * uBreath)), a);
 }`;
 
@@ -193,17 +205,17 @@ const GLOW_VS = /* glsl */`
 varying vec2 vUv;
 void main() { vUv = uv; vec4 mv = modelViewMatrix * vec4(0.0, 0.0, 0.0, 1.0); mv.xy += position.xy; gl_Position = projectionMatrix * mv; }`;
 const GLOW_FS = /* glsl */`
-uniform float uTime; uniform float uBreath; uniform vec3 uGlow;
+uniform float uTime; uniform float uBreath; uniform vec3 uGlow; uniform float uGrown;
 varying vec2 vUv;
 void main() {
-  float d = length(vUv - 0.5) * 2.0;
+  float d = length(vUv - 0.5) * 2.0 / max(0.25, uGrown);
   float a = pow(max(0.0, 1.0 - d), 2.4) * (0.20 + 0.045 * sin(uTime * 0.7) + 0.30 * uBreath);
   a += pow(max(0.0, 1.0 - d * 2.6), 3.0) * 0.35;
   gl_FragColor = vec4(uGlow, a);
 }`;
 
 const SPARK_VS = /* glsl */`
-uniform float uTime; uniform float uPxScale; uniform float uBreath;
+uniform float uTime; uniform float uPxScale; uniform float uBreath; uniform float uGrown;
 attribute vec4 aSeed;
 varying float vA;
 void main() {
@@ -215,7 +227,7 @@ void main() {
   p.x += sin(ang) * 7.0; p.z += cos(ang) * 7.0;
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   float flick = 0.55 + 0.45 * sin(uTime * (6.0 + aSeed.w * 11.0) + aSeed.x * 17.0);
-  vA = sin(3.14159 * t) * flick * (0.65 + 0.5 * uBreath);
+  vA = sin(3.14159 * t) * flick * (0.65 + 0.5 * uBreath) * step(aSeed.w, uGrown);
   gl_PointSize = max(1.0, (1.2 + 2.3 * aSeed.w) * uPxScale / -mv.z);
   gl_Position = projectionMatrix * mv;
 }`;
@@ -300,7 +312,12 @@ export function createOrb(canvas, graph, opts = {}) {
   const common = {
     uTime: { value: 0 }, uPxScale: { value: 1 }, uCamZ: { value: camZ }, uBreath: { value: 0 },
     uGlow: { value: new THREE.Vector3(...pal.glow) },
+    uReveal: { value: 1e9 }, uGrown: { value: 1 },
   };
+  // growth: every leaf's birth as days since the first leaf (float32 can't hold epoch seconds to the day; days can)
+  const born0 = graph.born && graph.born.length ? Math.min(...graph.born) : 0;
+  const dayOf = (sec) => (graph.born ? (sec - born0) / 86400 : -1);
+  const lastDay = graph.born ? (Math.max(...graph.born) - born0) / 86400 : 0;
   const blend = pal.additive ? THREE.AdditiveBlending : THREE.NormalBlending;
   const mat = (vs, fs, extra = {}, o = {}) => new THREE.ShaderMaterial({ vertexShader: vs, fragmentShader: fs, uniforms: { ...common, ...extra }, transparent: true, depthWrite: false, depthTest: false, blending: o.blending ?? blend });
 
@@ -318,13 +335,14 @@ export function createOrb(canvas, graph, opts = {}) {
   }
 
   // ---- nodes
-  const nPos = new Float32Array(cap.nodes * 3), nCharge = new Float32Array(cap.nodes), nWeight = new Float32Array(cap.nodes), nIgnite = new Float32Array(cap.nodes).fill(-1e6), nStrength = new Float32Array(cap.nodes);
+  const nPos = new Float32Array(cap.nodes * 3), nCharge = new Float32Array(cap.nodes), nWeight = new Float32Array(cap.nodes), nIgnite = new Float32Array(cap.nodes).fill(-1e6), nStrength = new Float32Array(cap.nodes), nBorn = new Float32Array(cap.nodes).fill(-1);
   nPos.set(graph.pos.slice(0, graph.n * 3));
-  for (let i = 0; i < graph.n; i++) { nCharge[i] = graph.charge[i]; nWeight[i] = graph.w[i]; }
+  for (let i = 0; i < graph.n; i++) { nCharge[i] = graph.charge[i]; nWeight[i] = graph.w[i]; nBorn[i] = graph.born ? dayOf(graph.born[i]) : -1; }
   const nodeGeo = new THREE.BufferGeometry();
   const dyn = (arr, k) => new THREE.BufferAttribute(arr, k).setUsage(THREE.DynamicDrawUsage);
   const aNPos = dyn(nPos, 3), aNCharge = dyn(nCharge, 1), aNWeight = dyn(nWeight, 1), aNIgnite = dyn(nIgnite, 1), aNStrength = dyn(nStrength, 1);
   nodeGeo.setAttribute('position', aNPos); nodeGeo.setAttribute('aCharge', aNCharge); nodeGeo.setAttribute('aWeight', aNWeight); nodeGeo.setAttribute('aIgnite', aNIgnite); nodeGeo.setAttribute('aStrength', aNStrength);
+  const aNBorn = dyn(nBorn, 1); nodeGeo.setAttribute('aBorn', aNBorn);
   nodeGeo.setDrawRange(0, graph.n);
   nodeGeo.boundingSphere = new THREE.Sphere(new THREE.Vector3(), R * 1.2);
   const nodes = new THREE.Points(nodeGeo, mat(NODE_VS, NODE_FS, { uNode: { value: new THREE.Vector3(...pal.node) }, uHeart: { value: new THREE.Vector3(...pal.heart) } }));
@@ -334,7 +352,7 @@ export function createOrb(canvas, graph, opts = {}) {
 
   // ---- threads
   const L = cap.lines;
-  const lPos = new Float32Array(L * 6), lKind = new Float32Array(L * 2), lIgnite = new Float32Array(L * 2).fill(-1e6), lStrength = new Float32Array(L * 2), lU = new Float32Array(L * 2), lDir = new Float32Array(L * 2);
+  const lBorn = new Float32Array(L * 2).fill(-1), lPos = new Float32Array(L * 6), lKind = new Float32Array(L * 2), lIgnite = new Float32Array(L * 2).fill(-1e6), lStrength = new Float32Array(L * 2), lU = new Float32Array(L * 2), lDir = new Float32Array(L * 2);
   for (let k = 0; k < L; k++) { lU[k * 2] = 0; lU[k * 2 + 1] = 1; }
   let m = 0;
   const lineA = new Int32Array(L), lineB = new Int32Array(L);
@@ -344,12 +362,14 @@ export function createOrb(canvas, graph, opts = {}) {
     lPos[k * 6] = nPos[a * 3]; lPos[k * 6 + 1] = nPos[a * 3 + 1]; lPos[k * 6 + 2] = nPos[a * 3 + 2];
     lPos[k * 6 + 3] = nPos[b * 3]; lPos[k * 6 + 4] = nPos[b * 3 + 1]; lPos[k * 6 + 5] = nPos[b * 3 + 2];
     lKind[k * 2] = lKind[k * 2 + 1] = kind;
+    lBorn[k * 2] = lBorn[k * 2 + 1] = Math.max(nBorn[a], nBorn[b]);
     return k;
   };
   for (let i = 0; i < graph.lines.length; i += 3) writeLine(graph.lines[i], graph.lines[i + 1], graph.lines[i + 2]);
   const lineGeo = new THREE.BufferGeometry();
   const aLPos = dyn(lPos, 3), aLKind = dyn(lKind, 1), aLIgnite = dyn(lIgnite, 1), aLStrength = dyn(lStrength, 1), aLDir = dyn(lDir, 1);
   lineGeo.setAttribute('position', aLPos); lineGeo.setAttribute('aKind', aLKind); lineGeo.setAttribute('aIgnite', aLIgnite); lineGeo.setAttribute('aStrength', aLStrength); lineGeo.setAttribute('aU', new THREE.BufferAttribute(lU, 1)); lineGeo.setAttribute('aDir', aLDir);
+  const aLBorn = dyn(lBorn, 1); lineGeo.setAttribute('aBorn', aLBorn);
   lineGeo.setDrawRange(0, m * 2);
   const threads = new THREE.LineSegments(lineGeo, mat(LINE_VS, LINE_FS, { uLine: { value: new THREE.Vector3(...pal.line) }, uReach: { value: new THREE.Vector3(...pal.reach) } }, { blending: THREE.NormalBlending }));
   threads.frustumCulled = false; threads.renderOrder = 1;
@@ -387,14 +407,15 @@ export function createOrb(canvas, graph, opts = {}) {
     }
   }
   const T = triIdx.length / 3;
-  const tPos = new Float32Array(T * 9), tIgnite = new Float32Array(T * 3).fill(-1e6), tStrength = new Float32Array(T * 3);
+  const tPos = new Float32Array(T * 9), tIgnite = new Float32Array(T * 3).fill(-1e6), tStrength = new Float32Array(T * 3), tBorn = new Float32Array(T * 3);
+  for (let t = 0; t < T; t++) { const b = Math.max(nBorn[triIdx[t * 3]], nBorn[triIdx[t * 3 + 1]], nBorn[triIdx[t * 3 + 2]]); tBorn[t * 3] = tBorn[t * 3 + 1] = tBorn[t * 3 + 2] = b; }
   for (let t = 0; t < T; t++) for (let v = 0; v < 3; v++) { const i = triIdx[t * 3 + v]; tPos[t * 9 + v * 3] = nPos[i * 3]; tPos[t * 9 + v * 3 + 1] = nPos[i * 3 + 1]; tPos[t * 9 + v * 3 + 2] = nPos[i * 3 + 2]; }
   const triOf = new Map();
   for (let t = 0; t < T; t++) for (let v = 0; v < 3; v++) { const i = triIdx[t * 3 + v]; let a = triOf.get(i); if (!a) triOf.set(i, (a = [])); a.push(t); }
   const triOfNode = new Map([...triOf].map(([i, a]) => [i, Int32Array.from(a)]));
   const triGeo = new THREE.BufferGeometry();
   const aTIgnite = dyn(tIgnite, 1), aTStrength = dyn(tStrength, 1);
-  triGeo.setAttribute('position', new THREE.BufferAttribute(tPos, 3)); triGeo.setAttribute('aIgnite', aTIgnite); triGeo.setAttribute('aStrength', aTStrength);
+  triGeo.setAttribute('position', new THREE.BufferAttribute(tPos, 3)); triGeo.setAttribute('aIgnite', aTIgnite); triGeo.setAttribute('aStrength', aTStrength); triGeo.setAttribute('aBorn', new THREE.BufferAttribute(tBorn, 1));
   const facets = new THREE.Mesh(triGeo, mat(TRI_VS, TRI_FS, {}, { blending: THREE.AdditiveBlending }));
   facets.material.side = THREE.DoubleSide;
   facets.frustumCulled = false; facets.renderOrder = 2;
@@ -445,6 +466,8 @@ export function createOrb(canvas, graph, opts = {}) {
 
   // ---- size and rings
   const rings = graph.rings ?? [];
+  const ringDay = new Float32Array(24);   // the day each ring's month began, relative to the first leaf
+  let ringsAll = 0;
   let W = 1, H = 1;
   function resize(w, h) {
     W = w; H = h;
@@ -462,8 +485,9 @@ export function createOrb(canvas, graph, opts = {}) {
       const total = widths.reduce((a, b) => a + b, 0) || 1;
       const r0 = orbPx * 1.18, r1 = Math.min(wp / 2 * 0.95, orbPx * (opts.ringReach ?? 4.2));
       let acc = r0;
-      for (let i = 0; i < N; i++) { acc += (widths[i] / total) * (r1 - r0); ringPx[i] = acc; }
-      bg.material.uniforms.uRingN.value = N;
+      const shown = rings.slice(-N);
+      for (let i = 0; i < N; i++) { acc += (widths[i] / total) * (r1 - r0); ringPx[i] = acc; ringDay[i] = graph.born ? (Date.UTC(shown[i].y, shown[i].m - 1, 1) / 1000 - born0) / 86400 : -1e9; }
+      ringsAll = N; setReveal(common.uReveal.value);
     }
   }
 
@@ -511,7 +535,8 @@ export function createOrb(canvas, graph, opts = {}) {
   function addLeaf(e, strength = 1.6) {
     if (e.i >= cap.nodes) return false;
     nPos[e.i * 3] = e.pos[0]; nPos[e.i * 3 + 1] = e.pos[1]; nPos[e.i * 3 + 2] = e.pos[2];
-    nCharge[e.i] = e.charge; nWeight[e.i] = e.w;
+    nCharge[e.i] = e.charge; nWeight[e.i] = e.w; nBorn[e.i] = graph.born ? dayOf(e.born) : -1;
+    aNBorn.addUpdateRange(e.i, 1); aNBorn.needsUpdate = true;
     aNPos.addUpdateRange(e.i * 3, 3); aNCharge.addUpdateRange(e.i, 1); aNWeight.addUpdateRange(e.i, 1);
     aNPos.needsUpdate = aNCharge.needsUpdate = aNWeight.needsUpdate = true;
     n = Math.max(n, e.i + 1); nodeGeo.setDrawRange(0, n);
@@ -519,7 +544,7 @@ export function createOrb(canvas, graph, opts = {}) {
     for (let q = 0; q + 2 < e.lines.length && m < L; q += 3) {
       const k = writeLine(e.lines[q], e.lines[q + 1], e.lines[q + 2]);
       if (base < 0) base = k; count++;
-      aLPos.addUpdateRange(k * 6, 6); aLKind.addUpdateRange(k * 2, 2); aLPos.needsUpdate = aLKind.needsUpdate = true;
+      aLPos.addUpdateRange(k * 6, 6); aLKind.addUpdateRange(k * 2, 2); aLBorn.addUpdateRange(k * 2, 2); aLPos.needsUpdate = aLKind.needsUpdate = aLBorn.needsUpdate = true;
     }
     lineGeo.setDrawRange(0, m * 2);
     ignite(e.i, { strength, lineBase: base, lineCount: count });
@@ -530,8 +555,17 @@ export function createOrb(canvas, graph, opts = {}) {
   // ---- the frame
   let frames = 0, last = 0, fps = 0, fpsFrames = 0, fpsAt = 0;
   const spin = opts.spin ?? 0.0105;        // radians per second: one turn in about ten minutes
-  function frame(ms) {
-    now = (ms - t0) / 1000;
+  /** Show the tree as it stood `days` after its first leaf (1e9 = all of it, the default); `grown` is the share of leaves showing. */
+  function setReveal(days, grown) {
+    common.uReveal.value = days;
+    common.uGrown.value = grown ?? (days >= lastDay ? 1 : Math.max(0, Math.min(1, days / Math.max(1, lastDay))));   // pass the share of leaves grown; days alone overstate the empty first months
+    if (bg) { let k = 0; while (k < ringsAll && ringDay[k] <= days) k++; bg.material.uniforms.uRingN.value = Math.max(days >= lastDay ? ringsAll : k, 0); }
+  }
+  function frame(ms) { frameAt((ms - t0) / 1000); }
+  /** Set the clock without drawing (so a scripted ignite lands at this time), then draw. */
+  function setTime(sec) { now = sec; }
+  function frameAt(sec) {
+    now = sec;
     common.uTime.value = now;
     breath = Math.exp(-Math.max(0, now - breathAt) / 5) * (now >= breathAt ? 1 : 0);
     common.uBreath.value = breath;
@@ -557,5 +591,5 @@ export function createOrb(canvas, graph, opts = {}) {
   }
 
   resize(opts.width ?? canvas.clientWidth ?? 1, opts.height ?? canvas.clientHeight ?? 1);
-  return { frame, ignite, addLeaf, breathe, pulse: (i, s = 1) => { if (i >= 0 && i < n) ring(i, s); }, resize, stats, dispose, get count() { return n; }, renderer };
+  return { frame, frameAt, setTime, setReveal, lastDay, born0, ignite, addLeaf, breathe, pulse: (i, s = 1) => { if (i >= 0 && i < n) ring(i, s); }, resize, stats, dispose, get count() { return n; }, renderer };
 }

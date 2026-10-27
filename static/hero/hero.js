@@ -35,6 +35,7 @@ async function startOrb() {
           treeRings = mod.ringRadii;
           root.dataset.orb = mod.ORB_KIND;
           drawRings();
+          setGrowth(growP);
           return;
         }
       }
@@ -55,7 +56,26 @@ function drawRings() {
   const svgPx = parseFloat(getComputedStyle(svg).width) || 1;
   const radii = treeRings(treeGraph, { to: Math.min(4.2, (Math.max(stage.clientWidth, stage.clientHeight) * 0.55) / orbR) });
   const u = 1000 / svgPx;
-  svg.replaceChildren(...radii.map((r) => { const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); c.setAttribute('r', (r * orbR * u).toFixed(1)); return c; }));
+  svg.replaceChildren(...radii.map(({ r, sec }) => { const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); c.setAttribute('r', (r * orbR * u).toFixed(1)); c.dataset.sec = sec; return c; }));
+  showRings(frontSec);
+}
+// ---- the growth: the hero opens on the tree's first seed and the scroll grows it, a ring arriving with each month (?grow=0: the full tree from the start)
+const growing = q.get('grow') !== '0';
+const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+const capMonth = document.querySelector('.grow-month'), capCount = document.querySelector('.grow-count');
+let frontSec = Infinity, growP = growing ? 0 : 1;
+function showRings(sec) {
+  document.querySelectorAll('.rings circle').forEach((c) => c.classList.toggle('unborn', Number(c.dataset.sec) > sec));
+}
+function setGrowth(p) {
+  growP = p;
+  const at = orb?.grow?.(p);
+  if (!at) return;
+  frontSec = p >= 1 ? Infinity : at.sec;
+  showRings(frontSec);
+  const d = new Date(at.sec * 1000);
+  capMonth.textContent = `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  capCount.textContent = `${at.count.toLocaleString('en-US')} ${at.count === 1 ? 'memory' : 'memories'}`;
 }
 const orbReady = startOrb().catch((e) => console.warn('orb failed', e));
 
@@ -84,10 +104,11 @@ own('.rings', { xPercent: -50, yPercent: -50 });
 own('.tree-title', { yPercent: -50 });
 own('.wipe', { yPercent: 100 });
 const cardLamps = [0, 1, 2].map((i) => document.querySelector(`#emb-${i} .lamp`));
+const growth = { p: 0 };   // the growth front, scrubbed by the pinned timeline
 const tl = gsap.timeline({
   defaults: { ease: 'power2.inOut' },
   scrollTrigger: {
-    trigger: '.stage', start: 'top top', end: () => `+=${Math.round(vh() * 4.4)}`, pin: true, scrub: 1.6, anticipatePin: 1,
+    trigger: '.stage', start: 'top top', end: () => `+=${Math.round(vh() * (growing ? 6.2 : 4.4))}`, pin: true, scrub: 1.6, anticipatePin: 1,
     invalidateOnRefresh: true,
     onUpdate: (st) => { const t = st.progress * tl.duration(); setSection(t < tl.labels.tree ? 1 : t < tl.labels.studio ? 2 : 3); },
     onLeave: () => orb?.stop?.(), onEnterBack: () => orb?.start?.(),
@@ -98,11 +119,14 @@ tl.addLabel('split', 0)
   .to('.split-note', { autoAlpha: 0, y: -24, duration: 0.5 }, 'split')
   .fromTo('.orb-wrap', { yPercent: narrow ? 6 : -36, scale: 0.84 }, { yPercent: -50, scale: 1, duration: 1.3, ease: 'power3.inOut' }, 'split')
   .fromTo('.rings', { scale: 0.86, autoAlpha: 0.4 }, { scale: 1, autoAlpha: 1, duration: 1.4 }, 'split+=0.1')
-  .addLabel('tree', 0.8)
+  .fromTo(growth, { p: 0 }, { p: 1, duration: growing ? 2.6 : 0.01, ease: 'power1.in', onUpdate: () => { if (growing) setGrowth(growth.p); } }, 'split+=0.15')
+  .fromTo('.grow-caption', { autoAlpha: 0, y: 18 }, { autoAlpha: growing ? 1 : 0, y: 0, duration: 0.5, ease: 'power2.out' }, 'split+=0.35')
+  .addLabel('tree', growing ? 'split+=2.6' : 0.8)
   .fromTo('.tree-title', { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 'tree')
   .to({}, { duration: 1.0 })                                                    // hold on the tree: installation, not demo
   .addLabel('wipe')
   .to('.tree-title', { autoAlpha: 0, y: -24, duration: 0.45 }, 'wipe')
+  .to('.grow-caption', { autoAlpha: 0, duration: 0.4 }, 'wipe')
   .fromTo('.wipe', { yPercent: 100 }, { yPercent: 0, duration: 1.25, ease: 'power3.inOut' }, 'wipe')
   .addLabel('studio', '>-0.35')
   .fromTo('.card', { y: 160, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.0, stagger: 0.18, ease: 'power3.out' }, 'studio')

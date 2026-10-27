@@ -146,6 +146,13 @@ a { color: inherit; }
 .consult { max-width: none; color: var(--ink-3); }
 .consult a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--amber); }
 
+.rings circle { transition: opacity 1.6s var(--ease-heavy), stroke 1.6s var(--ease-heavy); }
+.rings circle.unborn { opacity: 0; }
+.grow-caption { position: absolute; z-index: 4; right: var(--pad); bottom: 9vh; display: grid; justify-items: end; gap: 8px; opacity: 0; visibility: hidden; color: var(--ink-on-ground); text-align: right; }
+.grow-caption .grow-month { font-size: clamp(18px, 1.9cqi, 34px); font-variant-numeric: tabular-nums; }
+.grow-caption .grow-count { text-transform: uppercase; letter-spacing: .16em; font-size: 10px; opacity: .8; font-variant-numeric: tabular-nums; }
+[data-sky="paper"] .grow-caption { color: var(--ink); }
+
 /* the emboss lights: read by the SVG filters through CSS */
 .emb-key { lighting-color: var(--emb-key); }
 .emb-gold { lighting-color: var(--emb-gold); }
