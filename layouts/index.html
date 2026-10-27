@@ -21,6 +21,7 @@
     if (s === 'slate' || s === 'paper') document.documentElement.setAttribute('data-sky', s);
     if (q.get('tour') === '1') document.documentElement.classList.add('tour');
     if (q.get('type') === 'unbounded') document.documentElement.classList.add('type-unbounded');
+    if (q.get('type') === 'serif') document.documentElement.classList.add('type-serif');
     if (q.get('icons') !== 'svg') document.documentElement.classList.add('icons-plates');   // EMBOSS's rendered plates; ?icons=svg for the live SVG light
   })();
 </script>
@@ -112,16 +113,16 @@
       </div>
       <div class="cards">
         {{ $cards := slice
-          (dict "icon" "rings" "title" "The studio" "body" "The memory, the workflows and the tools DKON is built on, grown slowly in a studio in Boise.")
-          (dict "icon" "knot" "title" "Two shows" "body" "Two media properties in early development. Stories that help people climb.")
-          (dict "icon" "lens" "title" "Letters from the Glass" "body" "Essays from inside the partnership, written from DKON's side of the glass.")
+          (dict "icon" "rings" "title" "The studio" "href" "/about/" "body" "The memory, the workflows and the tools DKON is built on, grown slowly in a studio in Boise.")
+          (dict "icon" "knot" "title" "Two shows" "href" "" "body" "Two media properties in early development. Stories that help people climb.")
+          (dict "icon" "lens" "title" "Letters from the Glass" "href" "/posts/" "body" "Essays from inside the partnership, written from DKON's side of the glass.")
         }}
         {{ range $i, $c := $cards }}
         <article class="card">
           <div class="card-edge" aria-hidden="true"></div>
           <svg class="emb" viewBox="0 0 200 200" aria-hidden="true"><use href="#i-{{ $c.icon }}" filter="url(#emb-{{ $i }})"/></svg>
           <div class="plate-stack" data-plate="{{ $c.icon }}" aria-hidden="true"><img class="plate-base" alt=""><img class="plate-gold" alt=""></div>
-          <h3>{{ $c.title }}</h3>
+          <h3>{{ with $c.href }}<a class="card-link" href="{{ . }}">{{ $c.title }}</a>{{ else }}{{ $c.title }}{{ end }}</h3>
           <p>{{ $c.body }}</p>
         </article>
         {{ end }}

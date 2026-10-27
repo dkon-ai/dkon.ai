@@ -13,5 +13,6 @@
     var q = new URLSearchParams(location.search), s = q.get('sky') || localStorage.getItem('dkon-sky');
     if (s === 'slate' || s === 'paper') document.documentElement.setAttribute('data-sky', s);
     if (q.get('type') === 'unbounded') document.documentElement.classList.add('type-unbounded');
+    if (q.get('type') === 'serif') document.documentElement.classList.add('type-serif');
   })();
 </script>

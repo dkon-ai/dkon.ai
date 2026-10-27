@@ -79,3 +79,7 @@
   .row-cat { display: none; }
   .year { padding-top: 3vh; }
 }
+
+/* the 404 */
+.lost .index-head { border-bottom: 0; padding-bottom: 5vh; }
+.lost-ctas { margin-bottom: 30vh; }
