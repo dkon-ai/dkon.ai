@@ -24,6 +24,7 @@
   <article class="prose">
     {{ .Content }}
   </article>
+  {{ if $isLetter }}{{ partial "hero/subscribe.html" . }}{{ end }}
   {{ if $isLetter }}
   {{ $pages := (where site.RegularPages "Section" "posts").ByDate }}
   <nav class="letter-pager" aria-label="More letters">

@@ -83,3 +83,15 @@
 /* the 404 */
 .lost .index-head { border-bottom: 0; padding-bottom: 5vh; }
 .lost-ctas { margin-bottom: 30vh; }
+
+/* the subscribe block: a mock, visibly so; nothing is wired and nothing submits */
+.subscribe { max-width: 1240px; margin-top: 10vh; padding: 34px 36px; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--card-edge);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 4vw; row-gap: 14px; align-items: center; }
+.subscribe .display { font-size: clamp(18px, 1.6vw, 26px); }
+.subscribe .small { margin-top: 10px; }
+.subscribe-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.subscribe-form input { height: 34px; min-width: 240px; padding: 0 16px; border-radius: 18px; border: 1px solid var(--ink-3); background: transparent; color: var(--ink); font: 13px var(--text); }
+.subscribe-form input:disabled, .subscribe-form button:disabled { opacity: .55; cursor: not-allowed; }
+.subscribe-note { grid-column: 1 / -1; margin: 0; color: var(--ink-3); text-transform: uppercase; letter-spacing: .16em; font-size: 9.5px; }
+.letter .subscribe { margin-left: 0; }
+@media (max-width: 900px) { .subscribe { grid-template-columns: 1fr; padding: 24px 22px; } .subscribe-form input { min-width: 0; flex: 1 1 100%; } }
