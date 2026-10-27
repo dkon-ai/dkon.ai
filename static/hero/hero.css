@@ -22,7 +22,7 @@
   --world-top: #a9a9a9; --world-bottom: #3f3f3f;
   --panel: #c9c9c9; --panel-hi: #d6d6d6;
   --ground-hi: #e2e2e2; --ground: #b8b8b8; --ground-lo: #9a9a9a;
-  --ink: #121212; --ink-2: #3f3f3f; --ink-3: #6a6a6a; --ink-on-ground: #ffffff;
+  --ink: #121212; --ink-2: #3f3f3f; --ink-3: #505050;   /* small text clears 4.5:1 on the cards */ --ink-on-ground: #ffffff;
   --hair: rgba(0, 0, 0, .22); --ring: rgba(0, 0, 0, .055);
   --card: rgba(255, 255, 255, .07); --card-edge: rgba(255, 255, 255, .62); --card-shade: rgba(0, 0, 0, .10);
   --pill-dark: #0d0d0d; --pill-dark-ink: #f4f4f4;
@@ -35,7 +35,7 @@
   --world-top: #1b1d21; --world-bottom: #0b0a09;
   --panel: #23262b; --panel-hi: #2b2724;
   --ground-hi: #3a3632; --ground: #22252a; --ground-lo: #141518;
-  --ink: #ece6dc; --ink-2: #b8afa2; --ink-3: #847c71; --ink-on-ground: #f4efe6;
+  --ink: #ece6dc; --ink-2: #c8c0b4; --ink-3: #a39a8d;   /* small text clears 4.5:1 on the cards */ --ink-on-ground: #f4efe6;
   --hair: rgba(236, 230, 220, .16); --ring: rgba(236, 230, 220, .07);
   --card: rgba(255, 255, 255, .025); --card-edge: rgba(236, 230, 220, .20); --card-shade: rgba(0, 0, 0, .35);
   --pill-dark: #ece6dc; --pill-dark-ink: #17181b;
