@@ -197,6 +197,17 @@ if (root.classList.contains('tour')) {
   orbReady.then(() => setTimeout(run, 800));
 }
 
+// ---- the intro: on a fresh load at the top, the room fades up and the headline rises line by line (slow, heavy)
+if (scrollEl.scrollTop < 8 && !matchMedia('(prefers-reduced-motion: reduce)').matches && !root.classList.contains('tour')) {
+  gsap.timeline({ defaults: { ease: 'expo.out' } })
+    .from('.nav, .counter, .scroll-cue, .sky-toggle', { autoAlpha: 0, duration: 1.6, ease: 'power2.out' }, 0)
+    .from('.intro-lines .line > span', { yPercent: 115, duration: 1.7, stagger: 0.14 }, 0.15)
+    .from('.split .lede', { autoAlpha: 0, y: 16, duration: 1.4, ease: 'power3.out' }, 0.75)
+    .from('.split .ctas .pill', { autoAlpha: 0, y: 14, duration: 1.2, stagger: 0.1, ease: 'power3.out' }, 0.95)
+    .from('.split .ember', { scale: 0, duration: 0.9, ease: 'back.out(3)' }, 1.15)
+    .from('.orb-wrap', { autoAlpha: 0, duration: 2.2, ease: 'power2.out' }, 0.3);
+}
+
 window.addEventListener('resize', () => { setVh(); orb?.resize?.(); drawRings(); ScrollTrigger.refresh(); });
 setSection(1);
 window.__hero = { tl, scroller: scrollEl, get orb() { return orb; } };   // for the headless eyes

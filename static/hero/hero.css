@@ -66,6 +66,10 @@ a { color: inherit; }
 .type-unbounded .display, .type-unbounded .tenets p, .type-unbounded .mark { font-stretch: normal; font-weight: 400; letter-spacing: -.01em; }
 .type-unbounded .display { font-size: clamp(24px, 2.5cqi, 48px); }
 
+/* the intro: the headline's lines rise out of their own masks on first load */
+.intro-lines .line { display: block; overflow: hidden; padding: 0 .5em .1em 0; margin: 0 -.5em -.1em 0; }
+.intro-lines .line > span { display: inline-block; will-change: transform; }
+
 /* the world: only seen when the page floats as a panel (the wall) */
 .world { display: none; }
 
