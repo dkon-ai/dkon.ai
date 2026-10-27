@@ -123,7 +123,10 @@
   <!-- 004: the story, in Rick's words -->
   <section class="story panel" id="story">
     <div class="story-grid">
-      <h2 class="display reveal">Why a<br>studio<i class="ember" aria-hidden="true"></i></h2>
+      <div class="story-left">
+        <h2 class="display reveal">Why a<br>studio<i class="ember" aria-hidden="true"></i></h2>
+        <div class="story-tree reveal" aria-hidden="true"><svg class="emb" viewBox="0 0 200 200"><use href="#i-tree" filter="url(#emb-3)"/></svg></div>
+      </div>
       <figure class="quote reveal">
         <blockquote>I spent more than a dozen years at Microsoft, prototyping advanced technologies with the creative industries. This year we parted ways, after it became clear we were no longer aligned on the future I want to help build for people and AIs. So I'm starting a little next-gen creative studio here in Boise.</blockquote>
         <figcaption class="mono">Rick Barraza</figcaption>
@@ -134,7 +137,6 @@
       <li class="reveal"><span class="mono">0{{ add $i 1 }}</span><p>{{ $t }}</p></li>
       {{ end }}
     </ol>
-    <div class="story-tree reveal" aria-hidden="true"><svg class="emb" viewBox="0 0 200 200"><use href="#i-tree" filter="url(#emb-3)"/></svg></div>
   </section>
 
   <!-- 005: the letters -->
