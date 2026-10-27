@@ -168,6 +168,8 @@ document.querySelectorAll('.card').forEach((card, i) => {
 });
 
 // ---- 004 and 005 ----
+// past the stage, the chrome turns solid so the long sections don't slide under a bare nav
+ScrollTrigger.create({ trigger: '#story', start: 'top 72px', onEnter: () => root.classList.add('chrome-solid'), onLeaveBack: () => root.classList.remove('chrome-solid') });
 ScrollTrigger.create({ trigger: '#story', start: 'top 55%', end: 'bottom 55%', onEnter: () => setSection(4), onEnterBack: () => setSection(4) });
 ScrollTrigger.create({ trigger: '#letters', start: 'top 55%', onEnter: () => setSection(5), onLeaveBack: () => setSection(4) });
 gsap.utils.toArray('.reveal').forEach((el) => {
