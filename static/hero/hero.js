@@ -20,19 +20,42 @@ setVh();
 // ---- the orb ----
 let orb = null;
 const sky = () => root.getAttribute('data-sky') || 'paper';
+let treeRings = null, treeGraph = null;
 async function startOrb() {
-  const canvas = document.getElementById('orb');
-  let mod = null, data = null;
-  try {
-    const probe = await fetch('/hero/orb/orb.js', { method: 'HEAD' });
-    if (!probe.ok) throw new Error('no orb module yet');
-    mod = await import('/hero/orb/orb.js');
-    const r = await fetch('/hero/orb/graph.json');
-    data = r.ok ? await r.json() : null;
-  } catch { mod = null; }
-  if (!mod || typeof mod.createOrb !== 'function') mod = await import('/hero/orb-standin.js');
-  orb = mod.createOrb(canvas, data, { sky: sky(), quality: installation ? 'wall' : 'page' });
-  root.dataset.orb = mod.ORB_KIND || 'tree';
+  let canvas = document.getElementById('orb');
+  const quality = installation ? 'wall' : 'page';
+  if (q.get('orb') !== 'standin') {
+    try {
+      const probe = await fetch('/hero/orb/orb.js', { method: 'HEAD' });
+      if (probe.ok) {
+        const [mod, r] = await Promise.all([import('/hero/orb-tree.js'), fetch('/hero/orb/graph.json')]);
+        if (r.ok) {
+          treeGraph = await r.json();
+          orb = mod.createOrb(canvas, treeGraph, { sky: sky(), quality });
+          treeRings = mod.ringRadii;
+          root.dataset.orb = mod.ORB_KIND;
+          drawRings();
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn('the tree orb could not start; the stand-in draws instead', e);
+      const fresh = canvas.cloneNode(false); canvas.replaceWith(fresh); canvas = fresh;   // a canvas that tried WebGL can't give a 2D context
+    }
+  }
+  const mod = await import('/hero/orb-standin.js');
+  orb = mod.createOrb(canvas, null, { sky: sky(), quality });
+  root.dataset.orb = mod.ORB_KIND;
+}
+// the growth rings behind the tree: one per month, spaced by how much grew that month, measured in the orb's own radius
+function drawRings() {
+  if (!treeRings || !treeGraph) return;
+  const svg = document.querySelector('.rings'), wrap = document.querySelector('.orb-wrap'), stage = document.querySelector('.stage');
+  const orbR = (wrap.offsetHeight * 0.78) / 2;
+  const svgPx = parseFloat(getComputedStyle(svg).width) || 1;
+  const radii = treeRings(treeGraph, { to: Math.min(4.2, (stage.clientWidth * 0.49) / orbR) });
+  const u = 1000 / svgPx;
+  svg.replaceChildren(...radii.map((r) => { const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); c.setAttribute('r', (r * orbR * u).toFixed(1)); return c; }));
 }
 const orbReady = startOrb().catch((e) => console.warn('orb failed', e));
 
@@ -148,6 +171,6 @@ if (root.classList.contains('tour')) {
   orbReady.then(() => setTimeout(run, 800));
 }
 
-window.addEventListener('resize', () => { setVh(); orb?.resize?.(); ScrollTrigger.refresh(); });
+window.addEventListener('resize', () => { setVh(); orb?.resize?.(); drawRings(); ScrollTrigger.refresh(); });
 setSection(1);
 window.__hero = { tl, scroller: scrollEl, get orb() { return orb; } };   // for the headless eyes

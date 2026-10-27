@@ -23,7 +23,7 @@
   --panel: #c9c9c9; --panel-hi: #d6d6d6;
   --ground-hi: #e2e2e2; --ground: #b8b8b8; --ground-lo: #9a9a9a;
   --ink: #121212; --ink-2: #3f3f3f; --ink-3: #6a6a6a; --ink-on-ground: #ffffff;
-  --hair: rgba(0, 0, 0, .22); --ring: rgba(0, 0, 0, .085);
+  --hair: rgba(0, 0, 0, .22); --ring: rgba(0, 0, 0, .055);
   --card: rgba(255, 255, 255, .07); --card-edge: rgba(255, 255, 255, .62); --card-shade: rgba(0, 0, 0, .10);
   --pill-dark: #0d0d0d; --pill-dark-ink: #f4f4f4;
   --emb-key: #f3f3f3; --emb-gold: #ffc061; --emb-shadow: rgba(0, 0, 0, .26);
