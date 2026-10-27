@@ -15,6 +15,7 @@
     var q = new URLSearchParams(location.search), s = q.get('sky');
     if (s === 'slate' || s === 'paper') document.documentElement.setAttribute('data-sky', s);
     if (q.get('tour') === '1') document.documentElement.classList.add('tour');
+    if (q.get('type') === 'unbounded') document.documentElement.classList.add('type-unbounded');
   })();
 </script>
 </head>

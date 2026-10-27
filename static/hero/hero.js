@@ -53,7 +53,7 @@ function drawRings() {
   const svg = document.querySelector('.rings'), wrap = document.querySelector('.orb-wrap'), stage = document.querySelector('.stage');
   const orbR = (wrap.offsetHeight * 0.78) / 2;
   const svgPx = parseFloat(getComputedStyle(svg).width) || 1;
-  const radii = treeRings(treeGraph, { to: Math.min(4.2, (stage.clientWidth * 0.49) / orbR) });
+  const radii = treeRings(treeGraph, { to: Math.min(4.2, (Math.max(stage.clientWidth, stage.clientHeight) * 0.55) / orbR) });
   const u = 1000 / svgPx;
   svg.replaceChildren(...radii.map((r) => { const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); c.setAttribute('r', (r * orbR * u).toFixed(1)); return c; }));
 }
@@ -76,6 +76,7 @@ function setSection(n) {
 }
 
 // ---- 001-003: the pinned stage ----
+const narrow = matchMedia('(max-width: 900px)').matches;   // on a phone the split is taller, so the orb starts lower to peek out under it
 // CSS centres these with the translate property for the first paint; GSAP takes them over here, so its percentages mean what they say
 const own = (sel, vars) => document.querySelectorAll(sel).forEach((el) => { el.style.translate = 'none'; gsap.set(el, vars); });
 own('.orb-wrap', { xPercent: -50, yPercent: -50 });
@@ -95,7 +96,7 @@ const tl = gsap.timeline({
 tl.addLabel('split', 0)
   .to('.split', { yPercent: -101, duration: 1.2, ease: 'power3.inOut' }, 'split')
   .to('.split-note', { autoAlpha: 0, y: -24, duration: 0.5 }, 'split')
-  .fromTo('.orb-wrap', { yPercent: -36, scale: 0.84 }, { yPercent: -50, scale: 1, duration: 1.3, ease: 'power3.inOut' }, 'split')
+  .fromTo('.orb-wrap', { yPercent: narrow ? 6 : -36, scale: 0.84 }, { yPercent: -50, scale: 1, duration: 1.3, ease: 'power3.inOut' }, 'split')
   .fromTo('.rings', { scale: 0.86, autoAlpha: 0.4 }, { scale: 1, autoAlpha: 1, duration: 1.4 }, 'split+=0.1')
   .addLabel('tree', 0.8)
   .fromTo('.tree-title', { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 'tree')

@@ -61,6 +61,11 @@ a { color: inherit; }
   box-shadow: 0 0 .28em var(--amber), 0 0 .8em var(--amber-soft);
 }
 
+/* the alternative face (?type=unbounded): rounder, louder; Archivo at its widest stays the pick */
+.type-unbounded { --display: "Unbounded", "Archivo", sans-serif; }
+.type-unbounded .display, .type-unbounded .tenets p, .type-unbounded .mark { font-stretch: normal; font-weight: 400; letter-spacing: -.01em; }
+.type-unbounded .display { font-size: clamp(24px, 2.5cqi, 48px); }
+
 /* the world: only seen when the page floats as a panel (the wall) */
 .world { display: none; }
 
@@ -200,12 +205,16 @@ a { color: inherit; }
 
 /* narrow screens: the same story, stacked */
 @media (max-width: 900px) {
+  .display { font-size: clamp(20px, 5.6cqi, 40px); }
+  .orb-wrap { width: min(94cqi, 66vh); top: 40%; }
+  .rings { top: 40%; }
+  .tree-title { top: 78%; max-width: 86cqi; }
+  .tree-title .display { font-size: clamp(20px, 5.6cqi, 40px); }
   .nav-main { display: none; }
   .nav { grid-template-columns: 1fr auto; }
   .split { height: 62%; padding-top: calc(64px + 5vh); }
   .split-grid, .wipe-head, .story-grid, .letters-head { grid-template-columns: 1fr; row-gap: 22px; }
   .split-note { top: calc(62% + 4vh); }
-  .tree-title { max-width: 80cqi; }
   .cards { grid-template-columns: 1fr; overflow: hidden; }
   .card { min-height: 0; grid-template-columns: 90px 1fr; grid-template-rows: auto auto; column-gap: 16px; }
   .card .emb { grid-row: 1 / 3; width: 90px; }
