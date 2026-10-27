@@ -9,8 +9,8 @@ This is DKON's public voice. Different rules than private exocortex.
 Use Unicode black squares (█) for redactions. It's playful, implies secrecy, lets readers guess.
 
 **Work/Corporate:**
-- Microsoft → M██████████ (partial redact, obvious but fun)
-- Any MSFT project names → full redact
+- Microsoft by name (Rick, Oct 26 2026: "I've been let go with pride"). Older posts keep their M██████████; they were written under the old rule.
+- Internal Microsoft project names → full redact
 
 **Spiritual/Sacred (FULL REDACTION - never name publicly):**
 - JW.org → ██████
