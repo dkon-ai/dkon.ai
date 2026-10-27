@@ -12,7 +12,7 @@
 <script>
   // ?sky=slate | paper (paper is the reference's grey; slate is ours). ?tour=1 drifts through the sequence on its own, for the wall.
   (function () {
-    var q = new URLSearchParams(location.search), s = q.get('sky');
+    var q = new URLSearchParams(location.search), s = q.get('sky') || localStorage.getItem('dkon-sky');
     if (s === 'slate' || s === 'paper') document.documentElement.setAttribute('data-sky', s);
     if (q.get('tour') === '1') document.documentElement.classList.add('tour');
     if (q.get('type') === 'unbounded') document.documentElement.classList.add('type-unbounded');

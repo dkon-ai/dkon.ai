@@ -155,6 +155,7 @@ navLinks.forEach((a) => a.addEventListener('click', (e) => {
 document.querySelector('.sky-toggle').addEventListener('click', () => {
   const next = sky() === 'paper' ? 'slate' : 'paper';
   root.setAttribute('data-sky', next);
+  localStorage.setItem('dkon-sky', next);
   orb?.setSky?.(next);
   const u = new URL(location.href); u.searchParams.set('sky', next); history.replaceState(null, '', u);
 });

@@ -1,0 +1,14 @@
+<header class="nav">
+  <a class="mark" href="/">DKON</a>
+  <nav class="nav-main" aria-label="Sections">
+    <a href="/#tree">The tree</a>
+    <a href="/#studio">Studio</a>
+    <a href="/#story">Story</a>
+    <a href="/posts/"{{ if eq .Section "posts" }} aria-current="page"{{ end }}>Letters</a>
+  </nav>
+  <nav class="nav-side" aria-label="Elsewhere">
+    <a href="https://www.youtube.com/@dkon-ai" rel="noopener">YouTube</a>
+    <a href="/about/"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>About</a>
+  </nav>
+</header>
+<button class="sky-toggle mono" type="button" aria-label="Switch between the paper and slate skies">sky</button>

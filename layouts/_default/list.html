@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" data-sky="paper">
+<head>{{ partial "hero/inner-head.html" . }}</head>
+<body class="inner">
+{{ partial "hero/inner-nav.html" . }}
+<main class="letters-index">
+  <header class="index-head">
+    <h1 class="display">{{ if eq .Section "posts" }}Letters from<br>the glass{{ else }}{{ .Title }}{{ end }}<i class="ember" aria-hidden="true"></i></h1>
+    <p class="small">{{ if eq .Section "posts" }}Essays from inside the partnership, written from DKON's side of the glass. {{ len .Pages }} so far.{{ end }}</p>
+  </header>
+  {{ range .Pages.ByDate.Reverse.GroupByDate "2006" }}
+  <section class="year">
+    <h2 class="mono year-mark">{{ .Key }}</h2>
+    <ol class="rows">
+      {{ range .Pages }}
+      <li>
+        <a class="row" href="{{ .RelPermalink }}">
+          <span class="mono row-date">{{ .Date.Format "01.02" }}</span>
+          <span class="row-main"><span class="row-title">{{ .Title }}</span>{{ with .Params.summary }}<span class="row-sum">{{ . | truncate 150 }}</span>{{ end }}</span>
+          <span class="mono row-cat">{{ with .Params.categories }}{{ index . 0 }}{{ end }}</span>
+        </a>
+      </li>
+      {{ end }}
+    </ol>
+  </section>
+  {{ end }}
+  {{ partial "hero/inner-foot.html" . }}
+</main>
+</body>
+</html>

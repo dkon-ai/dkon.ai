@@ -1,0 +1,17 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}DKON{{ else }}{{ .Title }} · DKON{{ end }}</title>
+<meta name="description" content="{{ with .Params.summary }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" href="{{ "posts/index.xml" | relURL }}" title="Letters from the Glass">
+<link rel="preload" href="/hero/fonts/Archivo-wdth-wght.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/hero/hero.css">
+<link rel="stylesheet" href="/hero/letters.css">
+<script>
+  // the sky carries from page to page: ?sky= wins, then the last one chosen
+  (function () {
+    var q = new URLSearchParams(location.search), s = q.get('sky') || localStorage.getItem('dkon-sky');
+    if (s === 'slate' || s === 'paper') document.documentElement.setAttribute('data-sky', s);
+    if (q.get('type') === 'unbounded') document.documentElement.classList.add('type-unbounded');
+  })();
+</script>

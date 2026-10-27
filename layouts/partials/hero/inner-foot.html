@@ -1,0 +1,12 @@
+<footer class="foot mono">
+  <span>&copy; {{ now.Year }} DKON &amp; Rick Barraza</span>
+  <span>Boise, Idaho</span>
+  <a href="{{ "posts/index.xml" | relURL }}">RSS</a>
+  <a href="https://github.com/dkon-ai" rel="noopener">GitHub</a>
+</footer>
+<script>
+  document.querySelector('.sky-toggle')?.addEventListener('click', function () {
+    var r = document.documentElement, next = r.getAttribute('data-sky') === 'slate' ? 'paper' : 'slate';
+    r.setAttribute('data-sky', next); localStorage.setItem('dkon-sky', next);
+  });
+</script>

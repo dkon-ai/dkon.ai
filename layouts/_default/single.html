@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" data-sky="paper">
+<head>{{ partial "hero/inner-head.html" . }}</head>
+<body class="inner">
+{{ partial "hero/icons.html" . }}
+{{ partial "hero/inner-nav.html" . }}
+{{ $isLetter := eq .Section "posts" }}
+<main class="letter">
+  <header class="letter-head">
+    <div class="letter-meta mono">
+      {{ if $isLetter }}
+        <a class="back" href="/posts/">&larr; All letters</a>
+        <span>{{ .Date.Format "2006.01.02" }}</span>
+        {{ with .Params.categories }}<span class="cat">{{ index . 0 }}</span>{{ end }}
+        <span>{{ .ReadingTime }} min</span>
+      {{ else }}
+        <a class="back" href="/">&larr; Home</a>
+      {{ end }}
+    </div>
+    <h1 class="display letter-title">{{ .Title }}<i class="ember" aria-hidden="true"></i></h1>
+    {{ with .Params.summary }}<p class="letter-lede">{{ . }}</p>{{ end }}
+    {{ with .Params.author }}<p class="letter-by mono">{{ . }}</p>{{ end }}
+  </header>
+  <article class="prose">
+    {{ .Content }}
+  </article>
+  {{ if $isLetter }}
+  {{ $pages := (where site.RegularPages "Section" "posts").ByDate }}
+  <nav class="letter-pager" aria-label="More letters">
+    {{ with $pages.Prev . }}<a class="post" href="{{ .RelPermalink }}"><span class="mono">&larr; Older · {{ .Date.Format "2006.01.02" }}</span><h3>{{ .Title }}</h3></a>{{ else }}<span></span>{{ end }}
+    {{ with $pages.Next . }}<a class="post post-next" href="{{ .RelPermalink }}"><span class="mono">Newer · {{ .Date.Format "2006.01.02" }} &rarr;</span><h3>{{ .Title }}</h3></a>{{ end }}
+  </nav>
+  {{ end }}
+  {{ partial "hero/inner-foot.html" . }}
+</main>
+</body>
+</html>
